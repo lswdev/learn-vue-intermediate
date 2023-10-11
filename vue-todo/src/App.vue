@@ -2,7 +2,7 @@
   <div id="app">
     <TodoHeader />
     <TodoInput />
-    <TodoList />
+    <TodoList :propsdata="todoItems" /> <!-- :props="현재 위치 컴포넌트 데이터 속성" -->
     <TodoFooter />
   </div>
 </template>
@@ -15,7 +15,20 @@ import TodoList from './components/TodoList.vue'
 
 export default {
   name: 'App',
-  components: { TodoHeader, TodoInput, TodoFooter, TodoList }
+  components: { TodoHeader, TodoInput, TodoFooter, TodoList },
+  data: () => ({
+    todoItems: [],
+  }),
+  created() {
+    if(localStorage.length > 0) {
+      for(var i = 0; i < localStorage.length; i++) {
+        if(localStorage.key(i) !== '' && localStorage.key(i) !== 'loglevel:webpack-dev-server'){
+          this.todoItems.push(JSON.parse(localStorage.getItem(localStorage.key(i))));  // JSON.stringify로 인해 string 처리된 데이터를 parsing 해준다.
+        }
+      }
+    }
+    // console.log(this.todoItems);
+  },
 }
 </script>
 

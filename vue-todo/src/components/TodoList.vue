@@ -2,7 +2,7 @@
 <template>
   <div>
     <ul>
-      <li v-for="( todoItem, index ) in todoItems" :key="todoItem.item" class="shadow">
+      <li v-for="( todoItem, index ) in propsdata" :key="todoItem.item" class="shadow">
         <i class="fa-solid fa-check checkBtn" :class="{checkBtnCompleted: todoItem.completed}" @click="toggleComplete(todoItem, index)"></i>
         <span :class="{textCompleted: todoItem.completed}">{{ todoItem.item }}</span><!-- 로컬스토리지에 있는 데이터의 completed가 true일때만 클래스 출력 -->
         <span class="removeBtn" @click="removeTodo(todoItem, index)"><!-- 아이템과 인덱스를 넘긴다 -->
@@ -15,18 +15,7 @@
 
 <script>
   export default {
-    data: () => ({
-      todoItems: []
-    }),
-    created() {
-      if(localStorage.length > 0) {
-        for(var i = 0; i < localStorage.length; i++) {
-          if(localStorage.key(i) !== '' && localStorage.key(i) !== 'loglevel:webpack-dev-server'){
-            this.todoItems.push(JSON.parse(localStorage.getItem(localStorage.key(i))));  // JSON.stringify로 인해 string 처리된 데이터를 parsing 해준다.
-          }
-        }
-      }
-    },
+    props: ['propsdata'],
     methods: {
       removeTodo: (items,index) => {
         localStorage.removeItem(items.item);
