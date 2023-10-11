@@ -15,12 +15,8 @@
     }),
     methods: {
       addTodo() {
-        var obj = {completed: false, item: this.newTodoItem};
-        // console.log(this.newTodoItem);
-        //저장하는 로직         // 참고사이트 : https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem
-        // 로컬스토리지에 저장  lacalStorage.setItem( key, value );
-        localStorage.setItem(this.newTodoItem, JSON.stringify(obj));  //JSON.stringify 는 객체인 obj를 string으로 변환시켜주는 API.
-        // 관리자도구 > 애플리케이션 > 로컬 스토리지
+        // this.$emit('이벤트 이름', 인자1, 인자2)
+        this.$emit('addTodoItem', this.newTodoItem);
         this.clearInput();
       },
       clearInput() {
