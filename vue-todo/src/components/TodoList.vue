@@ -15,14 +15,13 @@
 
 <script>
   export default {
+    data: () => ({ }),
     props: ['propsdata'],
     methods: {
-      removeTodo: (items,index) => {
-        localStorage.removeItem(items.item);
-        this.todoItems.splice(index, 1);  //특정 index에서 하나를 지운다
-        // slice는 기존 배열을 변경한다.  // splice는 기존 배열을 유지한다.
+      removeTodo (items,index) {
+        this.$emit('removeItem', items, index);
       },
-      toggleComplete: (items) => {
+      toggleComplete (items) {
         localStorage.removeItem(items.item);
         // 로컬스토리지 데이터 갱신하는 DOM
         items.completed = !items.completed;

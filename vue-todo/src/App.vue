@@ -2,7 +2,7 @@
   <div id="app">
     <TodoHeader />
     <TodoInput @addTodoItem="addOneItem" /> <!-- @하위 컴포넌트에서 발생시킨 이벤트 이름="현재 컴포넌트의 메서드명" -->
-    <TodoList :propsdata="todoItems" /> <!-- :props="현재 위치 컴포넌트 데이터 속성" -->
+    <TodoList :propsdata="todoItems" @removeItem="removeOneItem" /> <!-- :props="현재 위치 컴포넌트 데이터 속성" -->
     <TodoFooter />
   </div>
 </template>
@@ -20,14 +20,20 @@ export default {
     todoItems: [],
   }),
   methods: {
-    addOneItem: function (todoItem) {
-      console.log(todoItem);
+    addOneItem: function(todoItem) {
+      // console.log(todoItem);
       var obj = {completed: false, item: todoItem};
       // 로컬스토리지에 저장  lacalStorage.setItem( key, value );
       localStorage.setItem(todoItem, JSON.stringify(obj));  //JSON.stringify 는 객체인 obj를 string으로 변환시켜주는 API.
       this.todoItems.push(obj);
       //저장하는 로직         // 참고사이트 : https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem
-    }
+    },
+    removeOneItem: function (items, index) {
+      console.log(items, index)
+      localStorage.removeItem(items.item);
+      this.todoItems.splice(index, 1);  //특정 index에서 하나를 지운다
+      // slice는 기존 배열을 변경한다.  // splice는 기존 배열을 유지한다.
+    },
   },
   created() {
     if(localStorage.length > 0) {
