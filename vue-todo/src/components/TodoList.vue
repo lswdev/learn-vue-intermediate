@@ -21,11 +21,8 @@
       removeTodo (items,index) {
         this.$emit('removeItem', items, index);
       },
-      toggleComplete (items) {
-        localStorage.removeItem(items.item);
-        // 로컬스토리지 데이터 갱신하는 DOM
-        items.completed = !items.completed;
-        localStorage.setItem(items.item, JSON.stringify(items));
+      toggleComplete (items, index) {
+        this.$emit('toggleComplete', items, index);
       },
     }
   }
