@@ -23,10 +23,12 @@ export default {
     addOneItem (todoItem) {
       // console.log(todoItem);
       var obj = {completed: false, item: todoItem};
-      // 로컬스토리지에 저장  lacalStorage.setItem( key, value );
-      localStorage.setItem(todoItem, JSON.stringify(obj));  //JSON.stringify 는 객체인 obj를 string으로 변환시켜주는 API.
-      this.todoItems.push(obj);
-      //저장하는 로직         // 참고사이트 : https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem
+      if (todoItem !== '') {
+        // 로컬스토리지에 저장  lacalStorage.setItem( key, value );
+        localStorage.setItem(todoItem, JSON.stringify(obj));  //JSON.stringify 는 객체인 obj를 string으로 변환시켜주는 API.
+        this.todoItems.push(obj);
+        //저장하는 로직         // 참고사이트 : https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem
+      }
     },
     removeOneItem (items, index) {
       // console.log(items, index)
