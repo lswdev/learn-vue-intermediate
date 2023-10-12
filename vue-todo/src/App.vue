@@ -3,7 +3,7 @@
     <TodoHeader />
     <TodoInput @addTodoItem="addOneItem" /> <!-- @하위 컴포넌트에서 발생시킨 이벤트 이름="현재 컴포넌트의 메서드명" -->
     <TodoList :propsdata="todoItems" @removeItem="removeOneItem" @toggleComplete="toggleOneItem" /> <!-- :props="현재 위치 컴포넌트 데이터 속성" -->
-    <TodoFooter />
+    <TodoFooter @clearTodo="clearAllItems" />
   </div>
 </template>
 
@@ -39,6 +39,10 @@ export default {
       this.todoItems[index].completed = !this.todoItems[index].completed;
       localStorage.removeItem(items.item);
       localStorage.setItem(items.item, JSON.stringify(items));
+    },
+    clearAllItems () {
+      localStorage.clear();
+      this.todoItems = [];
     },
   },
   created() {
