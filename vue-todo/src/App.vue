@@ -29,8 +29,8 @@ export default {
       //저장하는 로직         // 참고사이트 : https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem
     },
     removeOneItem: function (items, index) {
-      console.log(items, index)
-      localStorage.removeItem(items.item);
+      // console.log(items, index)
+      localStorage.removeItem(items.item);  // Object 내부 문자열 선택
       this.todoItems.splice(index, 1);  //특정 index에서 하나를 지운다
       // slice는 기존 배열을 변경한다.  // splice는 기존 배열을 유지한다.
     },
