@@ -1,7 +1,6 @@
 
 <template>
-  <div>
-    <ul>
+    <TransitionGroup name="list" tag="ul">
       <li v-for="( todoItem, index ) in propsdata" :key="todoItem.item" class="shadow">
         <i class="fa-solid fa-check checkBtn" :class="{checkBtnCompleted: todoItem.completed}" @click="toggleComplete(todoItem, index)"></i>
         <span :class="{textCompleted: todoItem.completed}">{{ todoItem.item }}</span><!-- 로컬스토리지에 있는 데이터의 completed가 true일때만 클래스 출력 -->
@@ -9,9 +8,17 @@
           <i class="fa-solid fa-trash"></i>
         </span>
       </li>
-    </ul>
-  </div>
+    </TransitionGroup>
 </template>
+<!--
+<TransitionGroup tag="ul" name="fade" class="container">
+    <div v-for="item in items" class="item" :key="item">
+      {{ item }}
+      <button @click="remove(item)">x</button>
+    </div>
+  </TransitionGroup>
+
+-->
 
 <script>
   export default {
@@ -28,7 +35,7 @@
   }
 </script>
 
-<style scoped>
+<style>
   ul {
     margin: 0;
     padding: 0;
@@ -61,5 +68,17 @@
   .textCompleted {
     text-decoration: line-through;
     color: #B3ADAD;
+  }
+
+  /* 리스트 트랜지션 효과 */
+  .list-move,
+  .list-enter-active,
+  .list-leave-active {
+    transition: all 0.5s ease;
+  }
+  .list-enter-from,
+  .list-leave-to {
+    opacity: 0;
+    transform: translateY(30px);
   }
 </style>

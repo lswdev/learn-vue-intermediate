@@ -21,25 +21,18 @@ export default {
   }),
   methods: {
     addOneItem (todoItem) {
-      // console.log(todoItem);
-      var obj = {completed: false, item: todoItem};
-      if (todoItem !== '') {
-        // 로컬스토리지에 저장  lacalStorage.setItem( key, value );
+      let obj = {completed: false, item: todoItem};
+      // 로컬스토리지에 저장  lacalStorage.setItem( key, value );
         localStorage.setItem(todoItem, JSON.stringify(obj));  //JSON.stringify 는 객체인 obj를 string으로 변환시켜주는 API.
-        this.todoItems.push(obj);
-        //저장하는 로직         // 참고사이트 : https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem
-      }
+        this.todoItems.push(obj); //저장하는 로직  // 참고사이트 : https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem
     },
     removeOneItem (items, index) {
-      // console.log(items, index)
       localStorage.removeItem(items.item);  // Object 내부 문자열 선택
-      this.todoItems.splice(index, 1);  //특정 index에서 하나를 지운다
-      // slice는 기존 배열을 변경한다.  // splice는 기존 배열을 유지한다.
+      this.todoItems.splice(index, 1);  //특정 index에서 하나를 지운다  // slice는 기존 배열을 변경한다.  // splice는 기존 배열을 유지한다.
     },
     toggleOneItem (items, index) {
-      // 로컬스토리지 데이터 갱신하는 DOM
       this.todoItems[index].completed = !this.todoItems[index].completed;
-      localStorage.removeItem(items.item);
+      localStorage.removeItem(items.item); // 로컬스토리지 데이터 갱신하는 DOM
       localStorage.setItem(items.item, JSON.stringify(items));
     },
     clearAllItems () {

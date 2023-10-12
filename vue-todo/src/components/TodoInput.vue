@@ -5,19 +5,40 @@
 <!--      <i class="fa-solid fa-plus addBtn"></i>  6.4.0 버전 plus icon -->
       <i class="fas fa-plus addBtn"></i>
     </span>
+    <ModalForm v-if="showModal" @close="showModal = false">
+      <template #header><!-- slot="header" -->
+        <h3 class="closeModalBtn" @click="showModal = false">경고 <i class="fa-solid fa-xmark"></i></h3>
+      </template>
+      <div slot="body">
+        아무것도 입력하지 않았습니다.
+      </div>
+<!--      <div slot="footer">
+        COPYRIGHT ©LSWDEV RESERVED
+        <button class="modal-default-button" @click="showModal = false">OK</button>
+      </div>-->
+    </ModalForm>
   </div>
 </template>
 
 <script>
+  import ModalForm from "@/components/common/Modal.vue";
+
   export default {
+    components: { ModalForm },
+    props: ['modalOpen'],
     data: () =>({
-      newTodoItem: ''
+      newTodoItem: '',
+      showModal: false,
     }),
     methods: {
       addTodo() {
-        // this.$emit('이벤트 이름', 인자1, 인자2)
-        this.$emit('addTodoItem', this.newTodoItem);
-        this.clearInput();
+        if (this.newTodoItem.replace(/(\s*)/g, "") !== '') {  // this.$emit('이벤트 이름', 인자1, 인자2)
+          this.$emit('addTodoItem', this.newTodoItem, this.showModal);
+          this.clearInput();
+        } else {
+          this.showModal = !this.showModal;
+          this.clearInput();
+        }
       },
       clearInput() {
         this.newTodoItem = '';
@@ -53,5 +74,9 @@
   }
   .addBtn {
     color: white;
+  }
+  .closeModalBtn {
+    color: #42B983;
+    cursor: pointer;
   }
 </style>
