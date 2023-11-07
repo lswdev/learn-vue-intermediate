@@ -1,7 +1,7 @@
 
 <template>
     <TransitionGroup name="list" tag="ul">
-      <li v-for="( todoItem, index ) in propsdata" :key="todoItem.item" class="shadow">
+      <li v-for="( todoItem, index ) in this.$store.state.todoItems" :key="todoItem.item" class="shadow">
         <i class="fa-solid fa-check checkBtn" :class="{checkBtnCompleted: todoItem.completed}" @click="toggleComplete(todoItem, index)"></i>
         <span :class="{textCompleted: todoItem.completed}">{{ todoItem.item }}</span><!-- 로컬스토리지에 있는 데이터의 completed가 true일때만 클래스 출력 -->
         <span class="removeBtn" @click="removeTodo(todoItem, index)"><!-- 아이템과 인덱스를 넘긴다 -->
@@ -12,24 +12,24 @@
 </template>
 <!--
 <TransitionGroup tag="ul" name="fade" class="container">
-    <div v-for="item in items" class="item" :key="item">
-      {{ item }}
-      <button @click="remove(item)">x</button>
-    </div>
-  </TransitionGroup>
-
+  <div v-for="item in items" class="item" :key="item">
+    {{ item }}
+    <button @click="remove(item)">x</button>
+  </div>
+</TransitionGroup>
 -->
 
 <script>
   export default {
     data: () => ({ }),
-    props: ['propsdata'],
+    // props: ['propsdata'],
     methods: {
-      removeTodo (items,index) {
-        this.$emit('removeItem', items, index);
+      removeTodo (todoItem,index) {
+        // this.$emit('removeItem', todoItem, index);
+        this.$store.commit('removeOneItem', todoItem, index);
       },
-      toggleComplete (items, index) {
-        this.$emit('toggleComplete', items, index);
+      toggleComplete (todoItem, index) {
+        this.$emit('toggleComplete', todoItem, index);
       },
     }
   }
