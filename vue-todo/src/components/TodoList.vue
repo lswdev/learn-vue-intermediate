@@ -29,7 +29,9 @@
         this.$store.commit('removeOneItem', todoItem, index);
       },
       toggleComplete (todoItem, index) {
-        this.$emit('toggleComplete', todoItem, index);
+        // this.$emit('toggleComplete', todoItem, index);
+        console.dir(index);
+        this.$store.commit('toggleComplete', [todoItem, index]);
       },
     }
   }

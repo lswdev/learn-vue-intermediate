@@ -2,8 +2,8 @@
   <div id="app">
     <TodoHeader />
     <TodoInput /> <!-- <TodoInput @addTodoItem="addOneItem" />--> <!-- @하위 컴포넌트에서 발생시킨 이벤트 이름="현재 컴포넌트의 메서드명"  >>  store에서 mutations로 변경-->
-    <TodoList :propsdata="todoItems" @toggleComplete="toggleOneItem" /><!-- <TodoList :propsdata="todoItems" @removeItem="removeOneItem" @toggleComplete="toggleOneItem" />--> <!-- :props="현재 위치 컴포넌트 데이터 속성" -->
-    <TodoFooter @clearTodo="clearAllItems" />
+    <TodoList /><!-- <TodoList :propsdata="todoItems" @removeItem="removeOneItem" @toggleComplete="toggleOneItem" />--> <!-- :props="현재 위치 컴포넌트 데이터 속성" -->
+    <TodoFooter /><!--<TodoFooter @clearTodo="clearAllItems" />-->
   </div>
 </template>
 
@@ -15,9 +15,7 @@ import TodoList from './components/TodoList.vue'
 export default {
   name: 'App',
   components: { TodoHeader, TodoInput, TodoFooter, TodoList },
-  data: () => ({
-    todoItems: [],
-  }),
+  data: () => ({}),
   methods: {
     // addOneItem (todoItem) {
     //   const obj = {completed: false, item: todoItem};
@@ -29,15 +27,15 @@ export default {
     //   localStorage.removeItem(items.item);  // Object 내부 문자열 선택
     //   this.todoItems.splice(index, 1);  //특정 index에서 하나를 지운다  // slice는 기존 배열을 변경한다.  // splice는 기존 배열을 유지한다.
     // },
-    toggleOneItem (items, index) {
-      this.todoItems[index].completed = !this.todoItems[index].completed;
-      localStorage.removeItem(items.item); // 로컬스토리지 데이터 갱신하는 DOM
-      localStorage.setItem(items.item, JSON.stringify(items));
-    },
-    clearAllItems () {
-      localStorage.clear();
-      this.todoItems = [];
-    },
+    // toggleOneItem (items, index) {
+    //   this.todoItems[index].completed = !this.todoItems[index].completed;
+    //   localStorage.removeItem(items.item); // 로컬스토리지 데이터 갱신하는 DOM
+    //   localStorage.setItem(items.item, JSON.stringify(items));
+    // },
+    // clearAllItems () {
+    //   localStorage.clear();
+    //   this.todoItems = [];
+    // },
   },
 }
 </script>
