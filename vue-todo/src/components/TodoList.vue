@@ -30,8 +30,7 @@
       },
       toggleComplete (todoItem, index) {
         // this.$emit('toggleComplete', todoItem, index);
-        console.dir(index);
-        this.$store.commit('toggleComplete', [todoItem, index]);
+        this.$store.commit('toggleComplete', { todoItem, index }); //두개 이상의 인자를 객체로 넘겼다
       },
     }
   }

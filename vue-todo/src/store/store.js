@@ -33,10 +33,10 @@ export const store = new Vuex.Store({
       localStorage.removeItem(todoItem.item);  // Object 내부 문자열 선택
       state.todoItems.splice(index, 1);  //특정 index에서 하나를 지운다  // slice는 기존 배열을 변경한다.  // splice는 기존 배열을 유지한다.
     },
-    toggleComplete (state, [items, index]) {
-      state.todoItems[index].completed = !state.todoItems[index].completed;
-      localStorage.removeItem(items.item); // 로컬스토리지 데이터 갱신하는 DOM
-      localStorage.setItem(items.item, JSON.stringify(items));
+    toggleComplete (state, payload) {
+      state.todoItems[payload.index].completed = !state.todoItems[payload.index].completed;
+      localStorage.removeItem(payload.todoItem.item); // 로컬스토리지 데이터 갱신하는 DOM
+      localStorage.setItem(payload.todoItem.item, JSON.stringify(payload.todoItem));
     },
     clearAllItems (state) {
       localStorage.clear();
