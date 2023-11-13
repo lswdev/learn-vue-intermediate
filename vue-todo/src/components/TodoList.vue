@@ -1,7 +1,8 @@
 
 <template>
     <TransitionGroup name="list" tag="ul">
-      <li v-for="( todoItem, index ) in this.$store.state.todoItems" :key="todoItem.item" class="shadow">
+<!--  <li v-for="( todoItem, index ) in this.$store.getters.storedTodoItems" :key="todoItem.item" class="shadow">-->
+      <li v-for="( todoItem, index ) in this.todoItems" :key="todoItem.item" class="shadow">
         <i class="fa-solid fa-check checkBtn" :class="{checkBtnCompleted: todoItem.completed}" @click="toggleComplete(todoItem, index)"></i>
         <span :class="{textCompleted: todoItem.completed}">{{ todoItem.item }}</span><!-- 로컬스토리지에 있는 데이터의 completed가 true일때만 클래스 출력 -->
         <span class="removeBtn" @click="removeTodo(todoItem, index)"><!-- 아이템과 인덱스를 넘긴다 -->
@@ -32,6 +33,11 @@
         // this.$emit('toggleComplete', todoItem, index);
         this.$store.commit('toggleComplete', { todoItem, index }); //두개 이상의 인자를 객체로 넘겼다
       },
+    },
+    computed: {
+      todoItems() {
+        return this.$store.getters.storedTodoItems;
+      }
     }
   }
 </script>
