@@ -2,7 +2,7 @@
 <template>
     <TransitionGroup name="list" tag="ul">
 <!--  <li v-for="( todoItem, index ) in this.$store.getters.storedTodoItems" :key="todoItem.item" class="shadow">-->
-      <li v-for="( todoItem, index ) in this.todoItems" :key="todoItem.item" class="shadow">
+      <li v-for="( todoItem, index ) in this.storedTodoItems" :key="todoItem.item" class="shadow">
         <i class="fa-solid fa-check checkBtn" :class="{checkBtnCompleted: todoItem.completed}" @click="toggleComplete(todoItem, index)"></i>
         <span :class="{textCompleted: todoItem.completed}">{{ todoItem.item }}</span><!-- 로컬스토리지에 있는 데이터의 completed가 true일때만 클래스 출력 -->
         <span class="removeBtn" @click="removeTodo(todoItem, index)"><!-- 아이템과 인덱스를 넘긴다 -->
@@ -21,6 +21,8 @@
 -->
 
 <script>
+  import { mapGetters } from 'vuex';
+
   export default {
     data: () => ({ }),
     // props: ['propsdata'],
@@ -35,9 +37,13 @@
       },
     },
     computed: {
-      todoItems() {
-        return this.$store.getters.storedTodoItems;
-      }
+      // todoItems() { // getters 에서 가져온 데이터를 computed에 매핑
+      //   return this.$store.getters.storedTodoItems;
+      // }
+      ...mapGetters(['storedTodoItems']),
+      // ...mapGetters({   // store에서 정의한 객체와 컴포넌트에서 정의한 이름이 다를 때 이렇게 사용할 수 있다.
+      //   todoItems: 'storedTodoItems'
+      // }),
     }
   }
 </script>
