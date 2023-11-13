@@ -6,11 +6,15 @@
 </template>
 
 <script>
+  import { mapMutations } from 'vuex';
   export default {
-    methods: {
-      clearTodo () {
-        this.$store.commit('clearAllItems');
-      },
+    methods: {  // methods에 위치했으니 mutations로 전환
+      ...mapMutations({
+        clearTodo: 'clearAllItems'
+      })
+      // clearTodo () {
+      //   this.$store.commit('clearAllItems');
+      // },
     }
 
   }
