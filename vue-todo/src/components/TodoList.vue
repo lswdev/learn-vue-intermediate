@@ -3,9 +3,9 @@
     <TransitionGroup name="list" tag="ul">
 <!--  <li v-for="( todoItem, index ) in this.$store.getters.storedTodoItems" :key="todoItem.item" class="shadow">-->
       <li v-for="( todoItem, index ) in this.storedTodoItems" :key="todoItem.item" class="shadow">
-        <i class="fa-solid fa-check checkBtn" :class="{checkBtnCompleted: todoItem.completed}" @click="toggleComplete(todoItem, index)"></i>
+        <i class="fa-solid fa-check checkBtn" :class="{checkBtnCompleted: todoItem.completed}" @click="toggleComplete({ todoItem, index })"></i>
         <span :class="{textCompleted: todoItem.completed}">{{ todoItem.item }}</span><!-- 로컬스토리지에 있는 데이터의 completed가 true일때만 클래스 출력 -->
-        <span class="removeBtn" @click="removeTodo(todoItem, index)"><!-- 아이템과 인덱스를 넘긴다 -->
+        <span class="removeBtn" @click="removeTodo({ todoItem, index })"><!-- 아이템과 인덱스를 넘긴다 -->
           <i class="fa-solid fa-trash"></i>
         </span>
       </li>
@@ -21,27 +21,32 @@
 -->
 
 <script>
-  import { mapGetters } from 'vuex';
+  import { mapGetters, mapMutations } from 'vuex';
 
   export default {
     data: () => ({ }),
     // props: ['propsdata'],
     methods: {
-      removeTodo (todoItem,index) {
-        // this.$emit('removeItem', todoItem, index);
-        this.$store.commit('removeOneItem', todoItem, index);
-      },
-      toggleComplete (todoItem, index) {
-        // this.$emit('toggleComplete', todoItem, index);
-        this.$store.commit('toggleComplete', { todoItem, index }); //두개 이상의 인자를 객체로 넘겼다
-      },
+      ...mapMutations({
+        removeTodo : "removeOneItem",
+        toggleComplete: "toggleOneItem",  // 아래 코드를 mapMutations로 간단히 정리
+      }),
+      // removeTodo (todoItem,index) {
+      //   // this.$emit('removeItem', todoItem, index);
+      //   this.$store.commit('removeOneItem', todoItem, index);
+      // },
+      // toggleComplete (todoItem, index) {
+      //   // this.$emit('toggleComplete', todoItem, index);
+      //   this.$store.commit('toggleOneItem', { todoItem, index }); //두개 이상의 인자를 객체로 넘겼다
+      // },
     },
     computed: {
+      ...mapGetters(['storedTodoItems']),
       // todoItems() { // getters 에서 가져온 데이터를 computed에 매핑
       //   return this.$store.getters.storedTodoItems;
       // }
-      ...mapGetters(['storedTodoItems']),
-      // ...mapGetters({   // store에서 정의한 객체와 컴포넌트에서 정의한 이름이 다를 때 이렇게 사용할 수 있다.
+
+      // ...mapGetters({   // store에서 정의한 객체와 컴포넌트에서 정의한 특정 메서드의 이름이 다를 때 이렇게 사용할 수 있다.
       //   todoItems: 'storedTodoItems'
       // }),
     }
